@@ -1,22 +1,32 @@
 package com.hbm.blocks.machine;
 
 import java.util.List;
+import java.util.Random;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.YellowBarrel;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityBarrel;
+import com.hbm.tileentity.machine.TileEntitySafe;
+
+import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import com.hbm.util.I18nUtil;
 import net.minecraft.block.Block;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagInt;
+import net.minecraft.nbt.NBTTagString;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.util.ITooltipFlag;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Item;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumBlockRenderType;
 import net.minecraft.util.EnumFacing;
@@ -26,6 +36,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class BlockFluidBarrel extends BlockContainer {
 
@@ -113,10 +125,55 @@ public class BlockFluidBarrel extends BlockContainer {
 	}
 	
 	@Override
+	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest){
+
+		if(!player.capabilities.isCreativeMode && !world.isRemote && willHarvest) {
+			ItemStack drop = new ItemStack(this);
+			TileEntity te = world.getTileEntity(pos);
+
+			NBTTagCompound nbt = new NBTTagCompound();
+			if(te != null) {
+				IFluidHandler container;
+				if(te instanceof TileEntitySafe){
+					container = ((TileEntitySafe)te).getPackingCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+				} 
+				else{
+					container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,null);
+				}
+				FluidStack stack = container.drain(capacity,true);
+				if(stack.amount > 0){
+					NBTTagString liquid = new NBTTagString(stack.getFluid().getName());
+					NBTTagInt quantity = new NBTTagInt(stack.amount);
+					nbt.setTag("liquid",liquid);
+					nbt.setTag("quantity",quantity);
+				}
+			}
+			if(!nbt.hasNoTags()) {
+				drop.setTagCompound(nbt);
+			}
+			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
+		}
+		boolean flag = world.setBlockToAir(pos);
+		return flag;
+	}
+
+	@Override
 	public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
 		if(!keepInventory)
 			InventoryHelper.dropInventoryItems(worldIn, pos, worldIn.getTileEntity(pos));
-		super.breakBlock(worldIn, pos, state);
+	}
+
+	@Override
+	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
+		TileEntity te = world.getTileEntity(pos);
+
+		if (te != null && stack.hasTagCompound()) {
+			IFluidHandler container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
+			NBTTagCompound nbt = stack.getTagCompound();
+			container.fill(new FluidStack(FluidRegistry.getFluid(nbt.getString("liquid")),nbt.getInteger("quantity")),true);
+		}
+
+		super.onBlockPlacedBy(world, pos, state, placer, stack);
 	}
 	
 	@Override
@@ -132,6 +189,11 @@ public class BlockFluidBarrel extends BlockContainer {
 	@Override
 	public boolean isFullCube(IBlockState state) {
 		return false;
+	}
+
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return null;
 	}
 	
 	@Override
