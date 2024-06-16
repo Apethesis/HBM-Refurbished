@@ -411,17 +411,6 @@ public class LaunchPad extends BlockContainer implements IBomb {
 					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
 					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
 				}
-				if(entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_volcano) {
-					EntityMissileVolcano missile = new EntityMissileVolcano(world, x + 0.5F, y + 1.5F, z + 0.5F, xCoord, zCoord);
-					missile.setAcceleration(0.8D);
-					if (!world.isRemote)
-						world.spawnEntity(missile);
-					entity.power -= 75000;
-
-					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
-					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
-					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
-				}
 
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_carrier && entity.power >= 75000) {
 					EntityCarrier missile = new EntityCarrier(world);

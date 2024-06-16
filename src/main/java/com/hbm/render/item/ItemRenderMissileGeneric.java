@@ -147,7 +147,6 @@ public class ItemRenderMissileGeneric extends TEISRBase {
 
 		renderers.put(new ComparableStack(ModItems.missile_nuclear), generateLarge(ResourceManager.missileNuclear_tex, ResourceManager.missileNuclear));
 		renderers.put(new ComparableStack(ModItems.missile_nuclear_cluster), generateLarge(ResourceManager.missileMIRV_tex, ResourceManager.missileNuclear));
-		renderers.put(new ComparableStack(ModItems.missile_volcano), generateLarge(ResourceManager.missileVolcano_tex, ResourceManager.missileNuclear));
 		renderers.put(new ComparableStack(ModItems.missile_n2), generateLarge(ResourceManager.missileN2_tex, ResourceManager.missileNuclear));
 		
 		renderers.put(new ComparableStack(ModItems.missile_endo), generateLarge(ResourceManager.missileEndo_tex, ResourceManager.missileThermo));
