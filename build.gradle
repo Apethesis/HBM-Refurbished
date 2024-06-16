@@ -24,7 +24,7 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '2.0.2'
+version = "2.0.5"
 group = 'com.hbm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = 'NTM-Extended-1.12.2'
 
@@ -92,11 +92,11 @@ repositories {
     }
     maven { //  baubles
         name = "mcmoddev"
-        url = "https://maven.mcmoddev.com"
+        url = "https://maven.blamejared.com/"
     }
     maven {
-        name = 'CoFH Maven'
-        url = 'https://maven.covers1624.net'
+        name = "CoFH Maven"
+        url = "http://maven.covers1624.net"
     }
 }
 
@@ -123,20 +123,20 @@ dependencies {
     // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei_1.12.2:${version_jei}:api")
+    compileOnly files("libs/jei_${version_mc}-${version_jei}.jar")
     // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei_1.12.2:${version_jei}")
+    runtimeOnly files("libs/jei_${version_mc}-${version_jei}.jar")
 
     //compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     //runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
-    compileOnly "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_crafttweaker}"
+    compileOnly files("libs/CraftTweaker2-1.12-${version_crafttweaker}.jar")
 
-    compileOnly fg.deobf("dev.galacticraft:galacticraft-legacy:${version_gc}")
+    compileOnly files("libs/galacticraft-legacy-${version_gc}.jar")
 
-    compileOnly fg.deobf("com.azanor:Baubles:${version_baubles}")
+    compileOnly files("libs/Baubles-${version_baubles}.jar")
 
-    compileOnly fg.deobf("cofh:RedstoneFlux:1.12-${version_redstoneflux}:universal")
+    compileOnly files("libs/RedstoneFlux-1.12-${version_redstoneflux}-universal.jar")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
