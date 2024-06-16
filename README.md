@@ -25,6 +25,7 @@ Now just wait for the build to finish and the new Jar file will be in `Hbm-s-Nuc
 
 #### Discords:
 
+zalander0
 cepmowoc
 Alcater#2644
 Golem#9568
