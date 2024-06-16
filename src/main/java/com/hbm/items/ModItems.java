@@ -1135,7 +1135,7 @@ public class ModItems {
 	public static final Item ingot_u233 = new ItemHazard(ItemHazard.u233, "ingot_u233").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_u235 = new ItemHazard(ItemHazard.u235, "ingot_u235").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_u238 = new ItemHazard(ItemHazard.u238, "ingot_u238").setCreativeTab(MainRegistry.partsTab);
-	public static final Item ingot_u238m2 = new ItemUnstable(350, 200, "ingot_u238m2").setCreativeTab(MainRegistry.partsTab);
+	public static final Item ingot_u238m2 = new ItemUnstable(350, 200, "ingot_u238m2", 36).setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_plutonium = new ItemHazard(ItemHazard.pu, "ingot_plutonium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_pu238 = new ItemHazard(ItemHazard.pu238, true, false, "ingot_pu238").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_pu239 = new ItemHazard(ItemHazard.pu239, "ingot_pu239").setCreativeTab(MainRegistry.partsTab);
@@ -1191,7 +1191,7 @@ public class ModItems {
 	public static final Item ingot_gh336 = new ItemHazard(ItemHazard.gh336, "ingot_gh336").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_radspice = new ItemHazard(ItemHazard.radspice, "ingot_radspice").addFire(15).addToxic(2).addBlinding().addHydroReactivity().toItem().setCreativeTab(MainRegistry.partsTab);
 
-	public static final Item ingot_electronium = new ItemUnstable(30, 6000, "ingot_electronium").setCreativeTab(MainRegistry.partsTab);
+	public static final Item ingot_electronium = new ItemUnstable(30, 6000, "ingot_electronium", 10).setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_reiium = new ItemCustomLore("ingot_reiium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_weidanium = new ItemCustomLore("ingot_weidanium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item ingot_australium = new ItemCustomLore("ingot_australium").setCreativeTab(MainRegistry.partsTab);
@@ -1265,7 +1265,7 @@ public class ModItems {
 	public static final Item nugget_u233 = new ItemHazard(ItemHazard.u233 * ItemHazard.nugget, "nugget_u233").setCreativeTab(MainRegistry.partsTab);
 	public static final Item nugget_u235 = new ItemHazard(ItemHazard.u235 * ItemHazard.nugget, "nugget_u235").setCreativeTab(MainRegistry.partsTab);
 	public static final Item nugget_u238 = new ItemHazard(ItemHazard.u238 * ItemHazard.nugget, "nugget_u238").setCreativeTab(MainRegistry.partsTab);
-	public static final Item nugget_u238m2 = new ItemUnstable(60, 2000, "nugget_u238m2").setCreativeTab(MainRegistry.partsTab);
+	public static final Item nugget_u238m2 = new ItemUnstable(60, 2000, "nugget_u238m2", 324).setCreativeTab(MainRegistry.partsTab);
 	public static final Item nugget_plutonium = new ItemHazard(ItemHazard.pu * ItemHazard.nugget, "nugget_plutonium").setCreativeTab(MainRegistry.partsTab);
 	public static final Item nugget_pu238 = new ItemHazard(ItemHazard.pu238 * ItemHazard.nugget, true, "nugget_pu238").setCreativeTab(MainRegistry.partsTab);
 	public static final Item nugget_pu239 = new ItemHazard(ItemHazard.pu239 * ItemHazard.nugget, "nugget_pu239").setCreativeTab(MainRegistry.partsTab);
@@ -3086,6 +3086,8 @@ public class ModItems {
 	public static final Item tiny_black_hole = new ItemFWatzCore("capsule_hole_tiny", 750000000L, 100, 100, 640, 640, 4).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.capsule_empty);
 	public static final Item tiny_singularity_spark = new ItemFWatzCore("capsule_sing_spark_tiny", 10000000000L, 500, 500, 1280, 320, 5).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.capsule_empty);
 	
+	public static final Item stabilized_black_hole = new ItemFWatzCore("capsule_hole_stable", 500000000L, 75, 75, 860, 860, 4).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.capsule_empty);;
+	
 	public static final Item singularity = new ItemFWatzCore("singularity", 2000000000L, 50, 50, 200, 1600, 2).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.capsule_empty);
 	public static final Item singularity_counter_resonant = new ItemFWatzCore("singularity_counter_resonant", 1000000000L, 50, 25, 100, 640, 1).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.capsule_empty);
 	public static final Item singularity_super_heated = new ItemFWatzCore("singularity_super_heated", 3000000000L, 75, 150, 1600, 800, 3).setMaxStackSize(1).setCreativeTab(MainRegistry.controlTab).setContainerItem(ModItems.capsule_empty);
@@ -3253,7 +3255,6 @@ public class ModItems {
 	public static final Item missile_n2 = new ItemMissileStandard("missile_n2").setCreativeTab(MainRegistry.missileTab);
 	public static final Item missile_nuclear = new ItemMissileStandard("missile_nuclear").setCreativeTab(MainRegistry.missileTab);
 	public static final Item missile_nuclear_cluster = new ItemMissileStandard("missile_nuclear_cluster").setCreativeTab(MainRegistry.missileTab);
-	public static final Item missile_volcano = new ItemMissileStandard("missile_volcano").setCreativeTab(MainRegistry.missileTab);
 	public static final Item missile_endo = new ItemMissileStandard("missile_endo").setCreativeTab(MainRegistry.missileTab);
 	public static final Item missile_exo = new ItemMissileStandard("missile_exo").setCreativeTab(MainRegistry.missileTab);
 	public static final Item missile_doomsday = new ItemMissileStandard("missile_doomsday").setCreativeTab(MainRegistry.missileTab);
