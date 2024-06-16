@@ -529,7 +529,7 @@ public class EntityModBeam extends Entity implements IProjectile {
     		} else if(mode == 8) {
 				this.world.playSound(null, this.posX, this.posY, this.posZ, SoundEvents.ENTITY_GENERIC_EXPLODE, SoundCategory.HOSTILE, 100.0f, this.world.rand.nextFloat() * 0.1F + 0.9F);
 	    		
-	    		EntityBlackHole vortex = new EntityBlackHole(this.world, 2F);
+	    		EntityBlackHole vortex = new EntityBlackHole(this.world, 2F,true);
 	    		vortex.posX = this.posX;
 	    		vortex.posY = this.posY;
 	    		vortex.posZ = this.posZ;
