@@ -155,7 +155,17 @@ public class ItemDrop extends Item {
 				if(stack.getItem() != null && stack.getItem() == ModItems.tiny_black_hole && WeaponConfig.dropSing) {
 					if(!entityItem.world.isRemote) {
 
-						EntityBlackHole bl = new EntityBlackHole(entityItem.world, 0.15F);
+						EntityBlackHole bl = new EntityBlackHole(entityItem.world, 0.15F, true);
+						bl.posX = entityItem.posX;
+						bl.posY = entityItem.posY;
+						bl.posZ = entityItem.posZ;
+						entityItem.world.spawnEntity(bl);
+					}
+				}
+				if(stack.getItem() != null && stack.getItem() == ModItems.stabilized_black_hole && WeaponConfig.dropSing) {
+					if(!entityItem.world.isRemote) {
+
+						EntityBlackHole bl = new EntityBlackHole(entityItem.world, 0.35F, false);
 						bl.posX = entityItem.posX;
 						bl.posY = entityItem.posY;
 						bl.posZ = entityItem.posZ;
@@ -165,7 +175,7 @@ public class ItemDrop extends Item {
 				if(stack.getItem() != null && stack.getItem() == ModItems.black_hole && WeaponConfig.dropSing) {
 					if(!entityItem.world.isRemote) {
 
-						EntityBlackHole bl = new EntityBlackHole(entityItem.world, 1.5F);
+						EntityBlackHole bl = new EntityBlackHole(entityItem.world, 1.5F, true);
 						bl.posX = entityItem.posX;
 						bl.posY = entityItem.posY;
 						bl.posZ = entityItem.posZ;
