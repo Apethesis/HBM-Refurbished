@@ -70,8 +70,8 @@ public class MachineRecipes {
 			list.add(new GasCentOutput(10, new ItemStack(ModItems.dust), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.sas3){
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_schrabidium), 1));
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_schrabidium), 2));
+			list.add(new GasCentOutput(8, new ItemStack(ModItems.nugget_schrabidium), 1));
+			list.add(new GasCentOutput(8, new ItemStack(ModItems.nugget_schrabidium), 2));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 3));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 4));
 			return list;
