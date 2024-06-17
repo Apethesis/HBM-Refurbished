@@ -111,7 +111,7 @@ public class MachineRecipes {
 		public GasCentOutput(int q, ItemStack s, int i) {
 			weight = q; // compatibility, dont use
 			quantity = q;
-			output = s;
+			output = new ItemStack(s.getItem(),q); // this shouldnt exist, but im too much of a lazy bum to change a buncha stuff
 			slot = i;
 		}
 	}
