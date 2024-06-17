@@ -17,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.internal.FMLNetworkHandler;
 
 import java.util.Random;
 
@@ -45,19 +46,18 @@ public class MachineAutocrafter extends BlockContainer {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(world.isRemote) {
-            return true;
-        } else if(!player.isSneaking()) {
-            TileEntityMachineAutocrafter entity = (TileEntityMachineAutocrafter) world.getTileEntity(pos);
-            if(entity != null) {
-                player.openGui(MainRegistry.instance, ModBlocks.guiID_machine_autocrafter, world, pos.getX(), pos.getY(), pos.getZ());
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {		if(world.isRemote) {
+			return true;
+		} else if(!player.isSneaking()) {
+			TileEntity entity = world.getTileEntity(pos);
+			if(entity instanceof TileEntityMachineAutocrafter) {
+				FMLNetworkHandler.openGui(player, MainRegistry.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+			}
+			return true;
+		} else {
+			return false;
+		}
+	}
 
     @Override
     public void breakBlock(World worldIn, BlockPos pos, IBlockState state) {
