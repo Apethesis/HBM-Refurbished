@@ -141,7 +141,7 @@ public class BlockFluidBarrel extends BlockContainer {
 					container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,null);
 				}
 				FluidStack stack = container.drain(capacity,true);
-				if(stack.amount > 0){
+				if(stack != null && stack.amount > 0){
 					NBTTagString liquid = new NBTTagString(stack.getFluid().getName());
 					NBTTagInt quantity = new NBTTagInt(stack.amount);
 					nbt.setTag("liquid",liquid);
