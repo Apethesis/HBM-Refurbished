@@ -52,16 +52,14 @@ public class MachineRecipes {
 		if(fluid == null){
 			return null;
 		} else if(fluid == ModForgeFluids.uf6){
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.nugget_u235), 1));
-			list.add(new GasCentOutput(19, new ItemStack(ModItems.nugget_u238), 2));
-			list.add(new GasCentOutput(7, new ItemStack(ModItems.nugget_uranium_fuel), 3));
-			list.add(new GasCentOutput(9, new ItemStack(ModItems.fluorite), 4));
+			list.add(new GasCentOutput(11, new ItemStack(ModItems.nugget_u238), 1));
+			list.add(new GasCentOutput(1, new ItemStack(ModItems.nugget_u235), 2));
+			list.add(new GasCentOutput(4, new ItemStack(ModItems.fluorite), 3));
 			return list;
 		} else if(fluid == ModForgeFluids.puf6){
 			list.add(new GasCentOutput(3, new ItemStack(ModItems.nugget_pu238), 1));
-			list.add(new GasCentOutput(2, new ItemStack(ModItems.nugget_pu239), 2));
-			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_pu240), 3));
-			list.add(new GasCentOutput(1, new ItemStack(ModItems.fluorite), 4));
+			list.add(new GasCentOutput(6, new ItemStack(ModItems.nugget_plutonium_fuel), 2));
+			list.add(new GasCentOutput(3, new ItemStack(ModItems.fluorite), 3));
 			return list;
 		} else if(fluid == ModForgeFluids.watz){
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.nugget_solinium), 1));
@@ -70,8 +68,8 @@ public class MachineRecipes {
 			list.add(new GasCentOutput(10, new ItemStack(ModItems.dust), 4));
 			return list;
 		} else if(fluid == ModForgeFluids.sas3){
-			list.add(new GasCentOutput(8, new ItemStack(ModItems.nugget_schrabidium), 1));
-			list.add(new GasCentOutput(8, new ItemStack(ModItems.nugget_schrabidium), 2));
+			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_schrabidium), 1));
+			list.add(new GasCentOutput(4, new ItemStack(ModItems.nugget_schrabidium), 2));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 3));
 			list.add(new GasCentOutput(1, new ItemStack(ModItems.sulfur), 4));
 			return list;
@@ -105,12 +103,14 @@ public class MachineRecipes {
 	}
 	
 	public static class GasCentOutput {
-		public int weight;
+		public int weight; // compatibility, dont use
+		public int quantity;
 		public ItemStack output;
 		public int slot;
 		
-		public GasCentOutput(int w, ItemStack s, int i) {
-			weight = w;
+		public GasCentOutput(int q, ItemStack s, int i) {
+			weight = q; // compatibility, dont use
+			quantity = q;
 			output = s;
 			slot = i;
 		}
@@ -123,9 +123,9 @@ public class MachineRecipes {
 		else if(fluid == FluidRegistry.LAVA)
 			return 1000;
 		else if(fluid == ModForgeFluids.uf6)
-			return 100;
+			return 400;
 		else if(fluid == ModForgeFluids.puf6)
-			return 100;
+			return 300;
 		else if(fluid == ModForgeFluids.watz)
 			return 1000;
 		else if(fluid == ModForgeFluids.sas3)
