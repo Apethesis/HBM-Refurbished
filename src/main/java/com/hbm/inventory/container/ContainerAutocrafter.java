@@ -29,14 +29,13 @@ public class ContainerAutocrafter extends Container {
 		/* RECIPE */
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
-				this.addSlotToContainer(new Slot((IInventory)tedf.inventory, j + i * 3 + 10, 44 + j * 18, 86 + i * 18));
+				this.addSlotToContainer(new SlotPattern(tedf.inventory, j + i * 3 + 10, 44 + j * 18, 86 + i * 18));
 			}
 		}
-		this.addSlotToContainer(new Slot((IInventory)tedf.inventory, 19, 116, 104));
+		this.addSlotToContainer(new SlotPattern(tedf.inventory, 19, 116, 104));
 		
 		//Battery
-		this.addSlotToContainer(new Slot((IInventory)tedf.inventory, 20, 17, 99));
-
+		this.addSlotToContainer(new SlotPattern(tedf.inventory, 20, 17, 99));
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 9; j++) {
 				this.addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 158 + i * 18));
