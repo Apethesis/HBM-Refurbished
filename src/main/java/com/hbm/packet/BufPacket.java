@@ -2,6 +2,9 @@ package com.hbm.packet;
 
 import com.hbm.tileentity.IBufPacketReceiver;
 
+//import cpw.mods.fml.common.network.simpleimpl.IMessage;
+//import cpw.mods.fml.common.network.simpleimpl.IMessageHandler;
+//import cpw.mods.fml.common.network.simpleimpl.MessageContext;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.tileentity.TileEntity;
@@ -52,4 +55,3 @@ public class BufPacket implements net.minecraftforge.fml.common.network.simpleim
 		
 		
 	}
-}
