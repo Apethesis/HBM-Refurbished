@@ -38,7 +38,7 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
     public int recipeCount;
 
     public TileEntityMachineAutocrafter() {
-        super(21);
+        super(22);
     }
 
     public void initPattern(ItemStack stack, int i) {
@@ -355,14 +355,14 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
 		
 		public void loadInventory(ItemStackHandler slot, int start) {
 			ItemStack[] slots = invSlots(slot);
-			for(int i = 0; i < this.getSizeInventory(); i++) {
+			for(int i = 0; i <= this.getSizeInventory(); i++) {
 				this.setInventorySlotContents(i, slots[start + i]);
 			}
 		}
 
 		public ItemStack[] invSlots(ItemStackHandler inv) {
-			ItemStack returnStack[] = new ItemStack[21];
-			for(int i = 0; i <= inv.getSlots(); i++) {
+			ItemStack returnStack[] = new ItemStack[23];
+			for(int i = 0; i < inv.getSlots(); i++) {
 				returnStack[i] = inv.getStackInSlot(i);
 			}
 			return returnStack;
