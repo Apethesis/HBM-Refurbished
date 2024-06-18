@@ -15,8 +15,9 @@ public class BufPacket implements net.minecraftforge.fml.common.network.simpleim
 	BlockPos pos;
 	IBufPacketReceiver rec;
 	ByteBuf buf;
-	
-	public BufPacket() { }
+
+	public BufPacket() {
+	}
 
 	public BufPacket(BlockPos pos, IBufPacketReceiver rec) {
 		this.pos = pos;
@@ -25,7 +26,7 @@ public class BufPacket implements net.minecraftforge.fml.common.network.simpleim
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-        this.pos = new BlockPos(buf.readInt(),buf.readInt(),buf.readInt());
+		this.pos = new BlockPos(buf.readInt(), buf.readInt(), buf.readInt());
 		this.buf = buf;
 	}
 
@@ -36,22 +37,24 @@ public class BufPacket implements net.minecraftforge.fml.common.network.simpleim
 		buf.writeInt(pos.getZ());
 		this.rec.serialize(buf);
 	}
-    // it annoys me how it requires the full ass thing
+
+	// it annoys me how it requires the full ass thing
 	public static class Handler implements net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler<BufPacket, net.minecraftforge.fml.common.network.simpleimpl.IMessage> {
 
-        @Override
-        public net.minecraftforge.fml.common.network.simpleimpl.IMessage onMessage(BufPacket m, net.minecraftforge.fml.common.network.simpleimpl.MessageContext ctx) {
-			if(Minecraft.getMinecraft().world == null)
+		@Override
+		public net.minecraftforge.fml.common.network.simpleimpl.IMessage onMessage(BufPacket m, net.minecraftforge.fml.common.network.simpleimpl.MessageContext ctx) {
+			if (Minecraft.getMinecraft().world == null)
 				return null;
-			
+
 			TileEntity te = Minecraft.getMinecraft().world.getTileEntity(m.pos);
-			
-			if(te instanceof IBufPacketReceiver) {
+
+			if (te instanceof IBufPacketReceiver) {
 				((IBufPacketReceiver) te).deserialize(m.buf);
 			}
-			
+
 			return null;
-        } // this so janky
-		
-		
+		} // this so janky
+
+
 	}
+}
