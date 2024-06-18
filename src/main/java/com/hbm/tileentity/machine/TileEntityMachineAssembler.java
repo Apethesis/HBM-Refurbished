@@ -33,6 +33,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import io.netty.buffer.ByteBuf;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
@@ -240,13 +241,7 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 				}
 			}
 
-			NBTTagCompound data = new NBTTagCompound();
-			data.setLong("power", power);
-			data.setInteger("progress", progress);
-			data.setInteger("maxProgress", maxProgress);
-			data.setBoolean("isProgressing", isProgressing);
-			data.setInteger("recipe", !inventory.getStackInSlot(4).isEmpty() ? ItemAssemblyTemplate.getRecipeIndex(inventory.getStackInSlot(4)) : -1);
-			this.networkPack(data, 150);
+			this.networkPackNT(150);
 		} else {
 
 			float volume = this.getVolume(2);
@@ -267,6 +262,16 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 			}
 
 		}
+	}
+
+	@Override
+	public void serialize(ByteBuf buf) {
+		super.serialize(buf);
+		buf.writeLong(power);
+		buf.writeInt(progress);
+		buf.writeInt(maxProgress);
+		buf.writeBoolean(isProgressing);
+		buf.writeInt(recipe);
 	}
 
 	private void updateConnections() {
@@ -316,12 +321,13 @@ public class TileEntityMachineAssembler extends TileEntityMachineBase implements
 	}
 	
 	@Override
-	public void networkUnpack(NBTTagCompound nbt) {
-		this.power = nbt.getLong("power");
-		this.progress = nbt.getInteger("progress");
-		this.maxProgress = nbt.getInteger("maxProgress");
-		this.isProgressing = nbt.getBoolean("isProgressing");
-		this.recipe = nbt.getInteger("recipe");
+	public void deserialize(ByteBuf buf) {
+		super.deserialize(buf);
+		power = buf.readLong();
+		progress = buf.readInt();
+		maxProgress = buf.readInt();
+		isProgressing = buf.readBoolean();
+		recipe = buf.readInt();
 	}
 
 	public boolean tryExchangeTemplates(TileEntity te1, TileEntity te2) {

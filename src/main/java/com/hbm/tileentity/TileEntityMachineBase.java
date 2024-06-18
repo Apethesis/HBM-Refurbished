@@ -3,9 +3,11 @@ package com.hbm.tileentity;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.interfaces.Spaghetti;
 import com.hbm.lib.ItemStackHandlerWrapper;
+import com.hbm.packet.BufPacket;
 import com.hbm.packet.NBTPacket;
 import com.hbm.packet.PacketDispatcher;
 
+import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -17,11 +19,13 @@ import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 
 @Spaghetti("Not spaghetti in itself, but for the love of god please use this base class for all machines")
-public abstract class TileEntityMachineBase extends TileEntityLoadedBase implements INBTPacketReceiver {
+public abstract class TileEntityMachineBase extends TileEntityLoadedBase implements INBTPacketReceiver, IBufPacketReceiver {
 
 	public ItemStackHandler inventory;
 
 	private String customName;
+
+	private boolean muffled;
 
 	public TileEntityMachineBase(int scount) {
 		this(scount, 64);
@@ -78,12 +82,27 @@ public abstract class TileEntityMachineBase extends TileEntityLoadedBase impleme
 	}
 	
 	public void networkPack(NBTTagCompound nbt, int range) {
-
+		nbt.setBoolean("muffled", muffled);
 		if(!world.isRemote)
 			PacketDispatcher.wrapper.sendToAllAround(new NBTPacket(nbt, pos), new TargetPoint(this.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), range));
 	}
 	
-	public void networkUnpack(NBTTagCompound nbt) { }
+	public void networkUnpack(NBTTagCompound nbt) { 
+		this.muffled = nbt.getBoolean("muffled");
+	}
+
+	/** Sends a sync packet that uses ByteBuf for efficient information-cramming */
+	public void networkPackNT(int range) {
+		if(!world.isRemote) PacketDispatcher.wrapper.sendToAllAround(new BufPacket(pos, this), new TargetPoint(this.world.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), range));
+	}
+
+	@Override public void serialize(ByteBuf buf) {
+		buf.writeBoolean(muffled);
+	}
+	
+	@Override public void deserialize(ByteBuf buf) {
+		this.muffled = buf.readBoolean();
+	}
 	
 	public void handleButtonPacket(int value, int meta) { }
 	
