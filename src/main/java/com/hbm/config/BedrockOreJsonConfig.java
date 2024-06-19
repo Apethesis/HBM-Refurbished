@@ -114,8 +114,7 @@ public class BedrockOreJsonConfig {
 
 	public static void addEntry(int dimID, int rarity, List<String> ores, Boolean isWhiteList){
 		HashSet<String> set = new HashSet();
-		for(String ore : ores)
-			set.add(ore);
+        set.addAll(ores);
 		dimOres.put(dimID, set);
 		dimOreRarity.put(dimID, rarity);
 		dimWhiteList.put(dimID, isWhiteList);

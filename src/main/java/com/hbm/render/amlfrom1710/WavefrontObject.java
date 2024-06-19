@@ -271,9 +271,9 @@ public class WavefrontObject implements IModelCustom
             boolean skipPart=false;
             for (String excludedGroupName : excludedGroupNames)
             {
-                if (excludedGroupName.equalsIgnoreCase(groupObject.name))
-                {
-                    skipPart=true;
+                if (excludedGroupName.equalsIgnoreCase(groupObject.name)) {
+                    skipPart = true;
+                    break;
                 }
             }
             if(!skipPart)
@@ -293,9 +293,9 @@ public class WavefrontObject implements IModelCustom
             exclude=false;
             for (String excludedGroupName : excludedGroupNames)
             {
-                if (excludedGroupName.equalsIgnoreCase(groupObject.name))
-                {
-                    exclude=true;
+                if (excludedGroupName.equalsIgnoreCase(groupObject.name)) {
+                    exclude = true;
+                    break;
                 }
             }
             if(!exclude)

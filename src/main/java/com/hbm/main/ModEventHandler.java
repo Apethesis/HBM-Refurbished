@@ -491,12 +491,12 @@ public class ModEventHandler {
 		try {
 			MessageDigest sha256 = MessageDigest.getInstance("SHA-256");
 			byte[] bytes = sha256.digest(inp.getBytes());
-			String str = "";
+			StringBuilder str = new StringBuilder();
 
 			for(int b : bytes)
-				str = str + Integer.toString((b & 0xFF) + 256, 16).substring(1);
+				str.append(Integer.toString((b & 0xFF) + 256, 16).substring(1));
 
-			return str;
+			return str.toString();
 
 		} catch(NoSuchAlgorithmException e) {
 		}

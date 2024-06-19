@@ -390,8 +390,7 @@ public class ColladaLoader {
 		Transform[] transforms = new Transform[floats.length/16];
 		for(int i = 0; i < floats.length/16; i++){
 			float[] rawTransform = new float[16];
-			for(int j = 0; j < 16; j ++)
-				rawTransform[j] = floats[i*16 + j];
+            System.arraycopy(floats, i * 16 + 0, rawTransform, 0, 16);
 			transforms[i] = new Transform(rawTransform);
 		}
 		return transforms;

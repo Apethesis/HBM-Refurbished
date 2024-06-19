@@ -156,10 +156,7 @@ public class FFPipeNetwork implements IFluidHandler {
 				pipe.setNetwork(net);
 			}
 			merge.pipes.clear();
-			for (ICapabilityProvider fill : merge.fillables) {
-				net.fillables.add(fill);
-
-			}
+            net.fillables.addAll(merge.fillables);
 			merge.Destroy();
 			return net;
 		} else if(net != null) {

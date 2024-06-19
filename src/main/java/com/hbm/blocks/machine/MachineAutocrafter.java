@@ -51,7 +51,7 @@ public class MachineAutocrafter extends BlockContainer {
 		} else if(!player.isSneaking()) {
 			TileEntity entity = world.getTileEntity(pos);
 			if(entity instanceof TileEntityMachineAutocrafter) {
-				FMLNetworkHandler.openGui(player, MainRegistry.instance, 0, world, pos.getX(), pos.getY(), pos.getZ());
+				player.openGui(MainRegistry.instance, ModBlocks.guiID_machine_autocrafter, world, pos.getX(), pos.getY(), pos.getZ());
 			}
 			return true;
 		} else {

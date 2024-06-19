@@ -33,8 +33,7 @@ public class ItemTurretBiometry extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		String[] names = getNames(stack);
 		if(names != null)
-			for(int i = 0; i < names.length; i++)
-				tooltip.add(names[i]);
+            tooltip.addAll(Arrays.asList(names));
 	}
 	
 	@Override

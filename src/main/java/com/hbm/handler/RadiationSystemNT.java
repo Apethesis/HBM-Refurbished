@@ -297,8 +297,7 @@ public class RadiationSystemNT {
 					updateRadSaveData(world);
 				}
 
-				List<Object> oList = new ArrayList<Object>();
-				oList.addAll(world.loadedEntityList);
+                List<Object> oList = new ArrayList<Object>(world.loadedEntityList);
 
 				for(Object e : oList) {
 					if(e instanceof EntityLivingBase) {
@@ -913,7 +912,7 @@ public class RadiationSystemNT {
 
 		if(subChunk.pocketsByBlock != null)
 			pocketsByBlock = null;
-		subChunk.pockets = pockets.toArray(new RadPocket[pockets.size()]);
+		subChunk.pockets = pockets.toArray(new RadPocket[0]);
 
 		//Finally, put the newly built sub chunk into the chunk
 		st.setForYLevel(yIndex << 4, subChunk);

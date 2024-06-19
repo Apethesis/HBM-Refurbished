@@ -91,8 +91,7 @@ public class PowerNet implements IPowerNet {
 
 	@Override
 	public List<IEnergyConductor> getLinks() {
-		List<IEnergyConductor> linkList = new ArrayList();
-		linkList.addAll(this.links.values());
+        List<IEnergyConductor> linkList = new ArrayList(this.links.values());
 		return linkList;
 	}
 

@@ -1,5 +1,6 @@
 package com.hbm.items.special;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
@@ -43,9 +44,7 @@ public class ItemCustomLore extends Item {
 
 			String[] locs = loc.split("\\$");
 
-			for(String s : locs) {
-				list.add(s);
-			}
+            list.addAll(Arrays.asList(locs));
 		}
 		if(this == ModItems.powder_asbestos)
 		{

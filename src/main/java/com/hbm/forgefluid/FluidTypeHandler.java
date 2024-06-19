@@ -1,9 +1,6 @@
 package com.hbm.forgefluid;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.hbm.render.misc.EnumSymbol;
 
@@ -193,8 +190,7 @@ public class FluidTypeHandler {
 			this.reactivity = r;
 			this.dfcFuel = dfc;
 			this.symbol = symbol;
-			for(FluidTrait trait : traits)
-				this.traits.add(trait);
+            this.traits.addAll(Arrays.asList(traits));
 		}
 	}
 	

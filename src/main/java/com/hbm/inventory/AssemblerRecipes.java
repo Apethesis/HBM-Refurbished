@@ -1043,9 +1043,8 @@ public class AssemblerRecipes {
 		if(ins != null) {
 			
 			AStack[] news = new AStack[ins.length + 1];
-			
-			for(int i = 0; i < ins.length; i++)
-				news[i] = ins[i];
+
+            System.arraycopy(ins, 0, news, 0, ins.length);
 			
 			news[news.length - 1] = new ComparableStack(ModItems.circuit_tantalium, amount);
 			
@@ -1191,7 +1190,7 @@ public class AssemblerRecipes {
 		if(recipes.containsKey(output)){
 			MainRegistry.logger.log(Level.WARN, "Found duplicate assembler recipe outputs! This is not allowed! Line number: " + line + " Skipping...");
 		}
-		recipes.put((ComparableStack) output, input.toArray(new AStack[input.size()]));
+		recipes.put((ComparableStack) output, input.toArray(new AStack[0]));
 		time.put((ComparableStack) output, recipeTime);
 		recipeList.add((ComparableStack) output);
 	}
@@ -1230,7 +1229,7 @@ public class AssemblerRecipes {
 				break;
 			idx += part.length()+1;
 		}
-		return list.toArray(new String[list.size()]);
+		return list.toArray(new String[0]);
 	}
 
 	private static AStack parseAStack(String s, int maxSize){

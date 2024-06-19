@@ -1621,16 +1621,16 @@ public class ModEventHandlerClient {
 
 				int bars = (int)Math.ceil(event.getEntity().getHealth() * count / event.getEntity().getMaxHealth());
 
-				String bar = TextFormatting.RED + "";
+				StringBuilder bar = new StringBuilder(TextFormatting.RED + "");
 
 				for(int i = 0; i < count; i++) {
 
 					if(i == bars)
-						bar += TextFormatting.RESET + "";
+						bar.append(TextFormatting.RESET + "");
 
-						bar += "|";
+						bar.append("|");
 				}
-				RenderOverhead.renderTag(event.getEntity(), event.getX(), event.getY(), event.getZ(), event.getRenderer(), bar, chestplate.thermal);
+				RenderOverhead.renderTag(event.getEntity(), event.getX(), event.getY(), event.getZ(), event.getRenderer(), bar.toString(), chestplate.thermal);
 			}
 		}
 	}

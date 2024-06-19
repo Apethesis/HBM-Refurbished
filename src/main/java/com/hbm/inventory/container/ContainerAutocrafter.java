@@ -1,5 +1,6 @@
 package com.hbm.inventory.container;
 
+import com.hbm.inventory.SlotMachineOutput;
 import com.hbm.inventory.SlotPattern;
 import com.hbm.tileentity.machine.TileEntityMachineAutocrafter;
 
@@ -13,35 +14,38 @@ import net.minecraftforge.items.SlotItemHandler;
 
 public class ContainerAutocrafter extends Container {
 
-	private TileEntityMachineAutocrafter autocrafter;
+	private final TileEntityMachineAutocrafter autocrafter;
 
-	public ContainerAutocrafter(InventoryPlayer invPlayer, TileEntityMachineAutocrafter tedf) {
-		autocrafter = tedf;
+	public ContainerAutocrafter(InventoryPlayer invPlayer, TileEntityMachineAutocrafter tema) {
+		autocrafter = tema;
 
 		/* TEMPLATE */
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
-				this.addSlotToContainer(new SlotPattern(tedf.inventory, j + i * 3, 44 + j * 18, 22 + i * 18));
+				this.addSlotToContainer(new SlotPattern(this.autocrafter.inventory, j + i * 3, 44 + j * 18, 22 + i * 18));
 			}
 		}
-		this.addSlotToContainer(new SlotPattern(tedf.inventory, 9, 116, 40));
+		this.addSlotToContainer(new SlotPattern(this.autocrafter.inventory, 9, 116, 40));
 
 		/* RECIPE */
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 3; j++) {
-				this.addSlotToContainer(new SlotItemHandler(tedf.inventory, j + i * 3 + 10, 44 + j * 18, 86 + i * 18));
+				this.addSlotToContainer(new SlotItemHandler(this.autocrafter.inventory, j + i * 3 + 10, 44 + j * 18, 86 + i * 18));
 			}
 		}
-		this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 19, 116, 104));
+		this.addSlotToContainer(new SlotItemHandler(this.autocrafter.inventory, 19, 116, 104));
 		
 		//Battery
-		this.addSlotToContainer(new SlotItemHandler(tedf.inventory, 20, 17, 99));
+		this.addSlotToContainer(new SlotItemHandler(this.autocrafter.inventory, 20, 17, 99));
+
+        // player inventory
 		for(int i = 0; i < 3; i++) {
 			for(int j = 0; j < 9; j++) {
 				this.addSlotToContainer(new Slot(invPlayer, j + i * 9 + 9, 8 + j * 18, 158 + i * 18));
 			}
 		}
 
+		// player hotbar
 		for(int i = 0; i < 9; i++) {
 			this.addSlotToContainer(new Slot(invPlayer, i, 8 + i * 18, 216));
 		}

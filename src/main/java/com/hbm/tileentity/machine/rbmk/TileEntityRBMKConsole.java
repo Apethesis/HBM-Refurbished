@@ -123,8 +123,8 @@ public class TileEntityRBMKConsole extends TileEntityMachineBase implements ICon
 				}
 			}
 		}
-		Integer[] fuelIndices = fuelRods.toArray(new Integer[fuelRods.size()]);
-		Integer[] controlIndices = controlRods.toArray(new Integer[controlRods.size()]);
+		Integer[] fuelIndices = fuelRods.toArray(new Integer[0]);
+		Integer[] controlIndices = controlRods.toArray(new Integer[0]);
 		screens[0] = new RBMKScreen(ScreenType.COL_TEMP, fuelIndices, null);
 		screens[1] = new RBMKScreen(ScreenType.FUEL_TEMP, fuelIndices, null);
 		screens[2] = new RBMKScreen(ScreenType.ROD_EXTRACTION, controlIndices, null);

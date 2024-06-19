@@ -113,7 +113,7 @@ public class ArmorHEV extends ArmorFSBPowered {
 
 		Minecraft.getMinecraft().fontRenderer.drawString("||" + (int)(c * 25), aX, aY, armorColor);
 
-		String rad = "☢ [";
+		StringBuilder rad = new StringBuilder("☢ [");
 
 		for(int i = 0; i < 10; i++) {
 
@@ -122,24 +122,24 @@ public class ArmorHEV extends ArmorFSBPowered {
 				int mid = (int)(in - i * 100);
 
 				if(mid < 33)
-					rad += "..";
+					rad.append("..");
 				else if(mid < 67)
-					rad += "|.";
+					rad.append("|.");
 				else
-					rad += "||";
+					rad.append("||");
 			} else {
-				rad += " ";
+				rad.append(" ");
 			}
 		}
 
-		rad += "]";
+		rad.append("]");
 
 		int rX = (int)(8 / scale);
 		int rY = (int)((res.getScaledHeight() - 40) / scale);
 
 		int radColor = in < 800 ? 0xff8000 : 0xff0000;
 
-		Minecraft.getMinecraft().fontRenderer.drawString(rad, rX, rY, radColor);
+		Minecraft.getMinecraft().fontRenderer.drawString(rad.toString(), rX, rY, radColor);
 
         GL11.glScaled(1/scale, 1/scale, 1/scale);
 

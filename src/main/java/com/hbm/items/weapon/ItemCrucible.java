@@ -148,18 +148,18 @@ public class ItemCrucible extends ItemSwordCutter implements IPostRender {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn){
-		String charge = TextFormatting.RED + "Charge [";
+		StringBuilder charge = new StringBuilder(TextFormatting.RED + "Charge [");
 		
 		int charges = getCharges(stack);
 		for(int i = 0; i < GeneralConfig.crucibleMaxCharges; i++)
 			if(charges > i)
-				charge += "||||||";
+				charge.append("||||||");
 			else
-				charge += "   ";
+				charge.append("   ");
 		
-		charge += "]";
+		charge.append("]");
 		
-		list.add(charge);
+		list.add(charge.toString());
 	}
 	
 	public static int getCharges(ItemStack stack){

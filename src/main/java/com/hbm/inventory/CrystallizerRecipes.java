@@ -1,11 +1,6 @@
 package com.hbm.inventory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import static com.hbm.inventory.OreDictManager.*;
@@ -197,7 +192,7 @@ public class CrystallizerRecipes {
 
 			List<List<ItemStack>> totalInput = new ArrayList<List<ItemStack>>();
 			totalInput.add(ingredients);
-			totalInput.add(Arrays.asList(inputFluid));
+			totalInput.add(Collections.singletonList(inputFluid));
 
 
 			jeiCrystalRecipes.add(new CrystallizerRecipe(totalInput, outputItem));

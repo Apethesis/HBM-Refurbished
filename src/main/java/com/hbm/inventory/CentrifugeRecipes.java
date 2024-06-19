@@ -1,9 +1,6 @@
 package com.hbm.inventory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 
 import static com.hbm.inventory.OreDictManager.*;
@@ -379,7 +376,7 @@ public class CentrifugeRecipes {
 		@Override
 		public void getIngredients(IIngredients ingredients) {
 			if(inputs != null){
-				ingredients.setInputLists(VanillaTypes.ITEM, Arrays.asList(inputs));
+				ingredients.setInputLists(VanillaTypes.ITEM, Collections.singletonList(inputs));
 			} else {
 				ingredients.setInput(VanillaTypes.ITEM, input);
 			}

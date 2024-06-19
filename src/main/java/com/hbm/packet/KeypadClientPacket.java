@@ -57,9 +57,7 @@ public class KeypadClientPacket implements IMessage {
 					pad.buttons[i].cooldown = m.data[i];
 				}
 				pad.isSettingCode = m.data[12] == 1 ? true : false;
-				for(int i = 0; i < 6; i ++){
-					pad.code[i] = m.data[13 + i];
-				}
+                System.arraycopy(m.data, 13, pad.code, 0, 6);
 				pad.successColorTicks = m.data[19];
 				pad.failColorTicks = m.data[20];
 			}

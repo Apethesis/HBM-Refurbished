@@ -1,6 +1,7 @@
 package com.hbm.command;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.hbm.capability.HbmLivingCapability;
@@ -41,8 +42,7 @@ public class CommandRadiation extends CommandBase {
 		} else if (args.length == 2 && (args[0].equals("clearall") || args[0].equals("reset") || args[0].equals("resetplayers"))) {
 			
 		} else if(args.length == 2 && args[0].equals("player")){
-			for(String s : server.getOnlinePlayerNames())
-				list.add(s);
+            list.addAll(Arrays.asList(server.getOnlinePlayerNames()));
 		} else if (args.length == 2 && args[0].equals("set")){
 			list.add(String.valueOf(sender.getPosition().getX()));
 		} else if (args.length == 3 && args[0].equals("set")){

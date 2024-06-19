@@ -46,7 +46,6 @@ import com.hbm.tileentity.machine.TileEntityDiFurnaceRTG;
 import com.hbm.tileentity.machine.TileEntityFWatzCore;
 import com.hbm.tileentity.machine.TileEntityForceField;
 import com.hbm.tileentity.machine.TileEntityHadron;
-import com.hbm.tileentity.machine.TileEntityHeaterFirebox;
 import com.hbm.tileentity.machine.TileEntityITER;
 import com.hbm.tileentity.machine.TileEntityMachineArcFurnace;
 import com.hbm.tileentity.machine.TileEntityMachineAssembler;
@@ -89,7 +88,6 @@ import com.hbm.tileentity.machine.TileEntityMachineSeleniumEngine;
 import com.hbm.tileentity.machine.TileEntityMachineShredder;
 import com.hbm.tileentity.machine.TileEntityMachineSiren;
 import com.hbm.tileentity.machine.TileEntityMachineTeleLinker;
-import com.hbm.tileentity.machine.TileEntityMachineTeleporter;
 import com.hbm.tileentity.machine.TileEntityMachineTurbine;
 import com.hbm.tileentity.machine.TileEntityMachineTurbofan;
 import com.hbm.tileentity.machine.TileEntityMachineUF6Tank;
@@ -125,7 +123,6 @@ import com.hbm.tileentity.turret.TileEntityTurretTauon;
 import com.hbm.tileentity.network.TileEntityRadioTorchSender;
 import com.hbm.tileentity.network.TileEntityRadioTorchReceiver;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -949,7 +946,7 @@ public class GuiHandler implements IGuiHandler {
 			return null;
 		case ModBlocks.guiID_machine_autocrafter:
 			if(entity instanceof TileEntityMachineAutocrafter) {
-				return new GUIAutocrafter(player.inventory, (TileEntityMachineAutocrafter) entity);
+				return new GUIMachineAutocrafter(player.inventory, (TileEntityMachineAutocrafter) entity);
 			}
 			return null;
 		case ModBlocks.guiID_nuke_furnace:

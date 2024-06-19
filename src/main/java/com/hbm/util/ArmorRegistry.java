@@ -1,9 +1,6 @@
 package com.hbm.util;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 import com.hbm.handler.ArmorModHandler;
 import com.hbm.handler.ArmorUtil;
@@ -28,7 +25,7 @@ public class ArmorRegistry {
 			return false;
 		
 		List<HazardClass> list = getProtectionFromItem(entity.getItemStackFromSlot(slot));
-		return list.containsAll(Arrays.asList(clazz));
+		return new HashSet<>(list).containsAll(Arrays.asList(clazz));
 	}
 	
 	public static boolean hasAnyProtection(EntityLivingBase entity, EntityEquipmentSlot slot, HazardClass... clazz) {

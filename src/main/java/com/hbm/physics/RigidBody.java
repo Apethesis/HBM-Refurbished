@@ -2,6 +2,7 @@ package com.hbm.physics;
 
 import java.nio.FloatBuffer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.vecmath.AxisAngle4f;
@@ -319,9 +320,7 @@ public class RigidBody {
 	}
 	
 	public void addColliders(Collider... collide){
-		for(Collider c : collide){
-			colliders.add(c);
-		}
+        colliders.addAll(Arrays.asList(collide));
 		localCentroid = new Vec3(0, 0, 0);
 		mass = 0;
 		for(Collider c : colliders){
