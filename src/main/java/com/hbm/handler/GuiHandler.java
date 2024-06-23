@@ -332,7 +332,7 @@ public class GuiHandler implements IGuiHandler {
 			return null;
 		case ModBlocks.guiID_machine_autocrafter:
 			if(entity instanceof TileEntityMachineAutocrafter) {
-				return new ContainerAutocrafter(player.inventory, (TileEntityMachineAutocrafter) entity);
+				return new ContainerMachineAutocrafter(player.inventory, (TileEntityMachineAutocrafter) entity);
 			}
 			return null;
 		case ModBlocks.guiID_nuke_furnace:

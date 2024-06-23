@@ -1,6 +1,5 @@
 package com.hbm.inventory.container;
 
-import com.hbm.inventory.SlotMachineOutput;
 import com.hbm.inventory.SlotPattern;
 import com.hbm.tileentity.machine.TileEntityMachineAutocrafter;
 
@@ -12,11 +11,11 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 
-public class ContainerAutocrafter extends Container {
+public class ContainerMachineAutocrafter extends Container {
 
 	private final TileEntityMachineAutocrafter autocrafter;
 
-	public ContainerAutocrafter(InventoryPlayer invPlayer, TileEntityMachineAutocrafter tema) {
+	public ContainerMachineAutocrafter(InventoryPlayer invPlayer, TileEntityMachineAutocrafter tema) {
 		autocrafter = tema;
 
 		/* TEMPLATE */
@@ -51,56 +50,56 @@ public class ContainerAutocrafter extends Container {
 		}
 	}
 
-	@Override
-	public ItemStack slotClick(int index, int button, ClickType mode, EntityPlayer player) {
-		
-		//L/R: 0
-		//M3: 3
-		//SHIFT: 1
-		//DRAG: 5
-
-		if(index < 0 || index > 9) {
-			return super.slotClick(index, button, mode, player);
-		}
-
-		Slot slot = this.getSlot(index);
-		
-		ItemStack ret = null;
-		ItemStack held = player.inventory.getItemStack();
-		
-		if(slot.getHasStack())
-			ret = slot.getStack().copy();
-		
-		//Don't allow any interaction for the template's output
-		if(index == 9) {
-			
-			if((mode.equals(ClickType.PICKUP) || mode.equals(ClickType.PICKUP_ALL)) && slot.getHasStack()) {
-				autocrafter.nextTemplate();
-				this.detectAndSendChanges();
-			}
-			
-			return ret;
-		}
-		
-		if((mode.equals(ClickType.PICKUP) || mode.equals(ClickType.PICKUP_ALL)) && slot.getHasStack()) {
-			autocrafter.nextMode(index);
-			return ret;
-			
-		} else {
-	
-			slot.putStack(held != null ? held.copy() : null);
-			
-			if(slot.getHasStack()) {
-				slot.getStack().setCount(1);
-			}
-			
-			slot.onSlotChanged();
-			autocrafter.initPattern(slot.getStack(), index);
-			autocrafter.updateTemplateGrid();
-			
-			return ret;
-		}
-	}
+//	@Override
+//	public ItemStack slotClick(int index, int button, ClickType mode, EntityPlayer player) {
+//
+//		//L/R: 0
+//		//M3: 3
+//		//SHIFT: 1
+//		//DRAG: 5
+//
+//		if(index < 0 || index > 9) {
+//			return super.slotClick(index, button, mode, player);
+//		}
+//
+//		Slot slot = this.getSlot(index);
+//
+//		ItemStack ret = null;
+//		ItemStack held = player.inventory.getItemStack();
+//
+//		if(slot.getHasStack())
+//			ret = slot.getStack().copy();
+//
+//		//Don't allow any interaction for the template's output
+//		if(index == 9) {
+//
+//			if((mode.equals(ClickType.PICKUP) || mode.equals(ClickType.PICKUP_ALL)) && slot.getHasStack()) {
+//				autocrafter.nextTemplate();
+//				this.detectAndSendChanges();
+//			}
+//
+//			return ret;
+//		}
+//
+//		if((mode.equals(ClickType.PICKUP) || mode.equals(ClickType.PICKUP_ALL)) && slot.getHasStack()) {
+//			autocrafter.nextMode(index);
+//			return ret;
+//
+//		} else {
+//
+//			slot.putStack(held != null ? held.copy() : null);
+//
+//			if(slot.getHasStack()) {
+//				slot.getStack().setCount(1);
+//			}
+//
+//			slot.onSlotChanged();
+//			autocrafter.initPattern(slot.getStack(), index);
+//			autocrafter.updateTemplateGrid();
+//
+//			return ret;
+//		}
+//	}
 
 	@Override
 	public ItemStack transferStackInSlot(EntityPlayer player, int index) {

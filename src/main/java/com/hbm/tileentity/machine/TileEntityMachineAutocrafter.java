@@ -1,17 +1,14 @@
 package com.hbm.tileentity.machine;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
-import com.hbm.inventory.container.ContainerAutocrafter;
-import com.hbm.inventory.gui.GUIAutocrafter;
 import com.hbm.lib.ForgeDirection;
 import com.hbm.lib.Library;
-import com.hbm.tileentity.IGUIProvider;
 import com.hbm.tileentity.TileEntityMachineBase;
 import com.hbm.util.ItemStackUtil;
 
-import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.IInventory;
@@ -22,13 +19,11 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
-import net.minecraft.world.World;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.items.ItemStackHandler;
 import api.hbm.energy.IEnergyUser;
+import net.minecraftforge.registries.GameData;
 
-public class TileEntityMachineAutocrafter extends TileEntityMachineBase implements ITickable, IEnergyUser, IGUIProvider {
+public class TileEntityMachineAutocrafter extends TileEntityMachineBase implements ITickable, IEnergyUser {
     public static final String MODE_EXACT = "exact";
     public static final String MODE_WILDCARD = "wildcard";
     public String[] modes = new String[9];
@@ -38,7 +33,8 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
     public int recipeCount;
 
     public TileEntityMachineAutocrafter() {
-        super(22);
+        super(21);
+		inventory = new ItemStackHandler(21);
     }
 
     public void initPattern(ItemStack stack, int i) {
@@ -219,21 +215,28 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
 		if(!this.recipes.isEmpty()) {
 			inventory.setStackInSlot(9,this.recipes.get(this.recipeIndex).getCraftingResult(getTemplateGrid()));
 		} else {
-			inventory.setStackInSlot(9, null);
+			inventory.setStackInSlot(9, ItemStack.EMPTY);
 		}
 	}
 
     public List<IRecipe> getMatchingRecipes(InventoryCrafting grid) {
-		List<IRecipe> recipes = new ArrayList();
-		
-		for(Object o : CraftingManager.getRemainingItems(grid, world)) {
-			IRecipe recipe = (IRecipe) o;
-			
-			if(recipe.matches(grid, world)) {
-				recipes.add(recipe);
-			}
-		}
-		
+		List<IRecipe> recipes = new ArrayList<>();
+
+//		for(ItemStack o : CraftingManager.getRemainingItems(grid, world)) {
+//			CraftingManager.findMatchingRecipe(grid, world);
+//			IRecipe recipe = (IRecipe) o;
+//
+//			if(recipe.matches(grid, world)) {
+//				recipes.add(recipe);
+//			}
+//		}
+
+        for (IRecipe recipe : GameData.getWrapper(IRecipe.class)) {
+            if (recipe.matches(grid, world)) {
+                recipes.add(recipe);
+            }
+        }
+
 		return recipes;
 	}
 
@@ -254,11 +257,11 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
 			String mode = modes[i - 10];
 			
 			if(filter == null || mode == null || mode.isEmpty()) return true;
-			
+
 			if(isValidForFilter(filter, mode, stack)) {
 				return false;
 			}
-			
+
 			return true;
 		}
 		
@@ -355,14 +358,14 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
 		
 		public void loadInventory(ItemStackHandler slot, int start) {
 			ItemStack[] slots = invSlots(slot);
-			for(int i = 0; i <= this.getSizeInventory(); i++) {
+			for(int i = 0; i < this.getSizeInventory(); i++) {
 				this.setInventorySlotContents(i, slots[start + i]);
 			}
 		}
 
 		public ItemStack[] invSlots(ItemStackHandler inv) {
-			ItemStack returnStack[] = new ItemStack[23];
-			for(int i = 0; i < inv.getSlots(); i++) {
+			ItemStack[] returnStack = new ItemStack[21];
+			for(int i = 0; i <= inv.getSlots() - 1; i++) {
 				returnStack[i] = inv.getStackInSlot(i);
 			}
 			return returnStack;
@@ -415,7 +418,7 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
 		if(!this.recipes.isEmpty()) {
             inventory.setStackInSlot(9,this.recipes.get(this.recipeIndex).getCraftingResult(getTemplateGrid()));
 		} else {
-			inventory.setStackInSlot(9, null);
+			inventory.setStackInSlot(9, ItemStack.EMPTY);
 		}
 	}
 	
@@ -433,14 +436,14 @@ public class TileEntityMachineAutocrafter extends TileEntityMachineBase implemen
         return super.writeToNBT(nbt);
 	}
 
-	@Override
-	public Container provideContainer(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return new ContainerAutocrafter(player.inventory, this);
-	}
+//	@Override
+//	public Container provideContainer(int ID, EntityPlayer player, World world, int x, int y, int z) {
+//		return new ContainerAutocrafter(player.inventory, this);
+//	}
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
-		return new GUIAutocrafter(player.inventory, this);
-	}
+//	@Override
+//	@SideOnly(Side.CLIENT)
+//	public GuiScreen provideGUI(int ID, EntityPlayer player, World world, int x, int y, int z) {
+//		return new GUIAutocrafter(player.inventory, this);
+//	}
 }
