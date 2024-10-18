@@ -5,7 +5,7 @@ on:
     - unstable
 jobs:
   buildhbm:
-      name: Builds HBM Refurbished Edition
+      name: Builds HBM RE
       runs-on: ubuntu-22.04
       steps:
         - uses: actions/checkout@v4
@@ -13,6 +13,9 @@ jobs:
           with:
             distribution: 'temurin'
             java-version: '8'
+        - name: Allow running Gradle
+          run: chmod u+x ./gradlew
+            
         - name: Build with Gradle
           run: ./gradlew build
 
