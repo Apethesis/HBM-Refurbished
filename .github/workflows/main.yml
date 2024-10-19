@@ -17,7 +17,7 @@ jobs:
           run: chmod u+x ./gradlew
             
         - name: Build with Gradle
-          run: ./gradlew build
+          run: ./gradlew build --info
 
         - name: Upload built jar
           uses: actions/upload-artifact@v4
