@@ -144,11 +144,10 @@ public class BlockFluidBarrel extends BlockContainer {
 				}
 				FluidStack stack = container.drain(capacity,true);
 				if(stack != null && stack.amount > 0){
-					container.setItemDamage(capacity - stack.amount);
-					nbt.setTag(FLUID_NBT_KEY, fluid.writeToNBT(new NBTTagCompound()));
+					drop.setItemDamage(capacity - stack.amount);
+					nbt.setTag(FLUID_NBT_KEY, stack.writeToNBT(new NBTTagCompound()));
 				} else {
 					drop.setItemDamage(0);
-					return;
 				}
 			}
 			if(!nbt.hasNoTags()) {
