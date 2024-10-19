@@ -7,7 +7,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.YellowBarrel;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
-import com.hbm.tileentity.machine.TileEntityBarrel;Crate
+import com.hbm.tileentity.machine.TileEntityBarrel;
 import com.hbm.tileentity.machine.TileEntitySafe;
 
 import net.minecraftforge.fluids.FluidRegistry;
