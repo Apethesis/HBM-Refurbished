@@ -7,7 +7,7 @@ import com.hbm.blocks.ModBlocks;
 import com.hbm.blocks.generic.YellowBarrel;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
-import com.hbm.tileentity.machine.TileEntityBarrel;
+import com.hbm.tileentity.machine.TileEntityBarrel;Crate
 import com.hbm.tileentity.machine.TileEntitySafe;
 
 import net.minecraftforge.fluids.FluidRegistry;
@@ -40,6 +40,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class BlockFluidBarrel extends BlockContainer {
+
+	public static final String FLUID_NBT_KEY = "HbmFluidKey";
 
 	private int capacity;
 	public static boolean keepInventory;
@@ -142,10 +144,11 @@ public class BlockFluidBarrel extends BlockContainer {
 				}
 				FluidStack stack = container.drain(capacity,true);
 				if(stack != null && stack.amount > 0){
-					NBTTagString liquid = new NBTTagString(stack.getFluid().getName());
-					NBTTagInt quantity = new NBTTagInt(stack.amount);
-					nbt.setTag("liquid",liquid);
-					nbt.setTag("quantity",quantity);
+					container.setItemDamage(capacity - stack.amount);
+					nbt.setTag(FLUID_NBT_KEY, fluid.writeToNBT(new NBTTagCompound()));
+				} else {
+					drop.setItemDamage(0);
+					return;
 				}
 			}
 			if(!nbt.hasNoTags()) {
@@ -170,7 +173,10 @@ public class BlockFluidBarrel extends BlockContainer {
 		if (te != null && stack.hasTagCompound()) {
 			IFluidHandler container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
 			NBTTagCompound nbt = stack.getTagCompound();
-			container.fill(new FluidStack(FluidRegistry.getFluid(nbt.getString("liquid")),nbt.getInteger("quantity")),true);
+			if (!nbt.hasKey(FLUID_NBT_KEY)){
+				return;
+			}
+			container.fill(FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(FLUID_NBT_KEY)),true);
 		}
 
 		super.onBlockPlacedBy(world, pos, state, placer, stack);
