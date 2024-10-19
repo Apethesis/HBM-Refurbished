@@ -87,7 +87,7 @@ dependencies {
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api" 
+    compile files("libs/OpenComputers-MC${version_mc}-${version_oc}-api.jar")
 
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
@@ -105,7 +105,7 @@ dependencies {
 
     compileOnly files("libs/CraftTweaker2-1.12-${version_crafttweaker}.jar")
 
-    compileOnly files("libs/galacticraft-legacy-${version_gc}.jar")
+    compileOnly files("libs/Galacticraft-${version_mc}-${version_gc}.jar")
 
     compileOnly files("libs/Baubles-${version_baubles}.jar")
 
