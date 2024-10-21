@@ -5,7 +5,7 @@ on:
     - unstable
 jobs:
   buildhbm:
-      name: Builds HBM RE
+      name: Build HBM RE
       runs-on: ubuntu-22.04
       steps:
         - uses: actions/checkout@v4
@@ -13,6 +13,10 @@ jobs:
           with:
             distribution: 'temurin'
             java-version: '8'
+
+        - name: Download dependencies
+          run: mkdir libs && cd libs && wget https://github.com/MightyPirates/OpenComputers/releases/download/1.12.2-forge%2F1.8.6/OpenComputers-MC1.12.2-1.8.6+cd8851e-api.jar && wget https://mediafilez.forgecdn.net/files/2518/667/Baubles-1.12-1.5.2.jar && wget https://mediafilez.forgecdn.net/files/4671/122/Galacticraft-1.12.2-4.0.6.jar && wget https://mediafilez.forgecdn.net/files/2623/90/RedstoneFlux-1.12-2.1.0.6-universal.jar && wget https://mediafilez.forgecdn.net/files/5486/112/CraftTweaker2-1.12-4.1.20.700.jar && wget https://mediafilez.forgecdn.net/files/5101/347/jei_1.12.2-4.16.1.1012.jar && cd ..
+
         - name: Allow running Gradle
           run: chmod u+x ./gradlew
             
