@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        maven { url = "https://maven.minecraftforge.net/" }
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://maven.neoforged.net/" }
+        maven { url = "https://files.neoforged.net/maven" }
         mavenCentral()
         maven {
     // location of the maven that hosts JEI files
@@ -71,34 +71,7 @@ minecraft {
     }
 }
 
-repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-    maven { // CraftTweaker
-        name = "jared maven"
-        url = "http://maven.blamejared.com/"
-    }
-    maven { //GC
-        name = "galacticraft"
-        url = "https://maven.galacticraft.net/repository/legacy/"
-    }
-    maven { //  baubles
-        name = "mcmoddev"
-        url = "https://maven.blamejared.com/"
-    }
-    maven {
-        name = "CoFH Maven"
-        url = "http://maven.covers1624.net"
-    }
-}
+repositories {  }
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
@@ -114,7 +87,7 @@ dependencies {
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api" 
+    compile files("libs/OpenComputers-MC${version_mc}-${version_oc}-api.jar")
 
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
@@ -132,7 +105,7 @@ dependencies {
 
     compileOnly files("libs/CraftTweaker2-1.12-${version_crafttweaker}.jar")
 
-    compileOnly files("libs/galacticraft-legacy-${version_gc}.jar")
+    compileOnly files("libs/Galacticraft-${version_mc}-${version_gc}.jar")
 
     compileOnly files("libs/Baubles-${version_baubles}.jar")
 

@@ -1,5 +1,6 @@
 package com.hbm.tileentity.machine;
 
+import api.hbm.energy.IEnergyConnector;
 import com.hbm.blocks.ModBlocks;
 import com.hbm.forgefluid.FFUtils;
 import com.hbm.forgefluid.FluidTypeHandler;
@@ -166,6 +167,29 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		tank.readFromNBT(compound);
 		super.readFromNBT(compound);
 	}
+
+	public void writeNBT(NBTTagCompound nbt) {
+		NBTTagCompound data = new NBTTagCompound();
+		data.setShort("mode", mode);
+		data.setInteger("cap", tank.getCapacity());
+		tank.writeToNBT(nbt);
+		nbt.setTag("NBT_PERSISTENT_KEY", data);
+	}
+
+	public void readNBT(NBTTagCompound nbt) {
+		NBTTagCompound data = nbt.getCompoundTag("NBT_PERSISTENT_KEY");
+		this.mode = data.getShort("mode");
+		if(tank == null || tank.getCapacity() <= 0)
+			tank = new FluidTank(data.getInteger("cap"));
+
+		FluidStack fluidStack = new FluidStack(
+				FluidRegistry.getFluid(nbt.getString("FluidName")),
+				nbt.getInteger("Amount")
+		);
+
+		tank.setFluid(fluidStack);
+	}
+
 	
 	@Override
 	public <T> T getCapability(Capability<T> capability, EnumFacing facing) {

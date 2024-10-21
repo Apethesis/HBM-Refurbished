@@ -8,6 +8,7 @@ import com.hbm.blocks.generic.YellowBarrel;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityBarrel;
+import com.hbm.tileentity.machine.TileEntityMachineBattery;
 import com.hbm.tileentity.machine.TileEntitySafe;
 
 import net.minecraftforge.fluids.FluidRegistry;
@@ -40,6 +41,8 @@ import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
 import net.minecraftforge.fluids.capability.IFluidHandler;
 
 public class BlockFluidBarrel extends BlockContainer {
+
+	public static final String FLUID_NBT_KEY = "HbmFluidKey";
 
 	private int capacity;
 	public static boolean keepInventory;
@@ -126,35 +129,24 @@ public class BlockFluidBarrel extends BlockContainer {
 	
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest){
-
 		if(!player.capabilities.isCreativeMode && !world.isRemote && willHarvest) {
+
 			ItemStack drop = new ItemStack(this);
 			TileEntity te = world.getTileEntity(pos);
+			if (te instanceof TileEntityBarrel) {
+				TileEntityBarrel barrel = (TileEntityBarrel) te;
 
-			NBTTagCompound nbt = new NBTTagCompound();
-			if(te != null) {
-				IFluidHandler container;
-				if(te instanceof TileEntitySafe){
-					container = ((TileEntitySafe)te).getPackingCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-				} 
-				else{
-					container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,null);
-				}
-				FluidStack stack = container.drain(capacity,true);
-				if(stack != null && stack.amount > 0){
-					NBTTagString liquid = new NBTTagString(stack.getFluid().getName());
-					NBTTagInt quantity = new NBTTagInt(stack.amount);
-					nbt.setTag("liquid",liquid);
-					nbt.setTag("quantity",quantity);
+				NBTTagCompound nbt = new NBTTagCompound();
+				barrel.writeNBT(nbt);
+
+				if(!nbt.hasNoTags()) {
+					drop.setTagCompound(nbt);
 				}
 			}
-			if(!nbt.hasNoTags()) {
-				drop.setTagCompound(nbt);
-			}
+
 			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
 		}
-		boolean flag = world.setBlockToAir(pos);
-		return flag;
+		return world.setBlockToAir(pos);
 	}
 
 	@Override
@@ -167,13 +159,22 @@ public class BlockFluidBarrel extends BlockContainer {
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
 		TileEntity te = world.getTileEntity(pos);
 
-		if (te != null && stack.hasTagCompound()) {
-			IFluidHandler container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-			NBTTagCompound nbt = stack.getTagCompound();
-			container.fill(new FluidStack(FluidRegistry.getFluid(nbt.getString("liquid")),nbt.getInteger("quantity")),true);
+		if(stack.hasTagCompound()){
+			if (te instanceof TileEntityBarrel) {
+				TileEntityBarrel barrel = (TileEntityBarrel) te;
+				if(stack.hasDisplayName()) {
+					barrel.setCustomName(stack.getDisplayName());
+				}
+				try {
+					NBTTagCompound stackNBT = stack.getTagCompound();
+					if(stackNBT.hasKey("NBT_PERSISTENT_KEY")){
+						barrel.readNBT(stackNBT);
+					}
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
+			}
 		}
-
-		super.onBlockPlacedBy(world, pos, state, placer, stack);
 	}
 	
 	@Override
