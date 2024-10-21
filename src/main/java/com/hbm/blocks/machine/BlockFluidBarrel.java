@@ -8,6 +8,7 @@ import com.hbm.blocks.generic.YellowBarrel;
 import com.hbm.lib.InventoryHelper;
 import com.hbm.main.MainRegistry;
 import com.hbm.tileentity.machine.TileEntityBarrel;
+import com.hbm.tileentity.machine.TileEntityMachineBattery;
 import com.hbm.tileentity.machine.TileEntitySafe;
 
 import net.minecraftforge.fluids.FluidRegistry;
@@ -128,35 +129,24 @@ public class BlockFluidBarrel extends BlockContainer {
 	
 	@Override
 	public boolean removedByPlayer(IBlockState state, World world, BlockPos pos, EntityPlayer player, boolean willHarvest){
-
 		if(!player.capabilities.isCreativeMode && !world.isRemote && willHarvest) {
+
 			ItemStack drop = new ItemStack(this);
 			TileEntity te = world.getTileEntity(pos);
+			if (te instanceof TileEntityBarrel) {
+				TileEntityBarrel barrel = (TileEntityBarrel) te;
 
-			NBTTagCompound nbt = new NBTTagCompound();
-			if(te != null) {
-				IFluidHandler container;
-				if(te instanceof TileEntitySafe){
-					container = ((TileEntitySafe)te).getPackingCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-				} 
-				else{
-					container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY,null);
-				}
-				FluidStack stack = container.drain(capacity,true);
-				if(stack != null && stack.amount > 0){
-					drop.setItemDamage(capacity - stack.amount);
-					nbt.setTag(FLUID_NBT_KEY, stack.writeToNBT(new NBTTagCompound()));
-				} else {
-					drop.setItemDamage(0);
+				NBTTagCompound nbt = new NBTTagCompound();
+				barrel.writeNBT(nbt);
+
+				if(!nbt.hasNoTags()) {
+					drop.setTagCompound(nbt);
 				}
 			}
-			if(!nbt.hasNoTags()) {
-				drop.setTagCompound(nbt);
-			}
+
 			InventoryHelper.spawnItemStack(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, drop);
 		}
-		boolean flag = world.setBlockToAir(pos);
-		return flag;
+		return world.setBlockToAir(pos);
 	}
 
 	@Override
@@ -169,16 +159,22 @@ public class BlockFluidBarrel extends BlockContainer {
 	public void onBlockPlacedBy(World world, BlockPos pos, IBlockState state, EntityLivingBase placer, ItemStack stack){
 		TileEntity te = world.getTileEntity(pos);
 
-		if (te != null && stack.hasTagCompound()) {
-			IFluidHandler container = te.getCapability(CapabilityFluidHandler.FLUID_HANDLER_CAPABILITY, null);
-			NBTTagCompound nbt = stack.getTagCompound();
-			if (!nbt.hasKey(FLUID_NBT_KEY)){
-				return;
+		if(stack.hasTagCompound()){
+			if (te instanceof TileEntityBarrel) {
+				TileEntityBarrel barrel = (TileEntityBarrel) te;
+				if(stack.hasDisplayName()) {
+					barrel.setCustomName(stack.getDisplayName());
+				}
+				try {
+					NBTTagCompound stackNBT = stack.getTagCompound();
+					if(stackNBT.hasKey("NBT_PERSISTENT_KEY")){
+						barrel.readNBT(stackNBT);
+					}
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
 			}
-			container.fill(FluidStack.loadFluidStackFromNBT(nbt.getCompoundTag(FLUID_NBT_KEY)),true);
 		}
-
-		super.onBlockPlacedBy(world, pos, state, placer, stack);
 	}
 	
 	@Override
