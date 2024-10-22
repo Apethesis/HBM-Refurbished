@@ -182,8 +182,11 @@ public class TileEntityBarrel extends TileEntityMachineBase implements ITickable
 		if(tank == null || tank.getCapacity() <= 0)
 			tank = new FluidTank(data.getInteger("cap"));
 
+		Fluid fluid = FluidRegistry.getFluid(nbt.getString("FluidName"));
+		if (fluid == null) { return; } // when tank is empty
+
 		FluidStack fluidStack = new FluidStack(
-				FluidRegistry.getFluid(nbt.getString("FluidName")),
+				fluid,
 				nbt.getInteger("Amount")
 		);
 
