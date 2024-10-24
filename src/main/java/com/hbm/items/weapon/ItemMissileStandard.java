@@ -26,6 +26,12 @@ public class ItemMissileStandard extends Item {
 	
 	@Override
 	public void addInformation(ItemStack stack, World worldIn, List<String> list, ITooltipFlag flagIn) {
+		// dummy
+		if (this == ModItems.missile_dummy) {
+			list.add("§7["+I18nUtil.resolveKey("desc.dmmissile", "I")+"]§r");
+			list.add(TextFormatting.YELLOW + " "+ I18nUtil.resolveKey("desc.radius", 0));
+		}
+
 		//HE
 		if(this == ModItems.missile_generic) {
 			list.add("§7["+I18nUtil.resolveKey("desc.hemissile", "I")+"]§r");

@@ -1,36 +1,10 @@
 package com.hbm.blocks.bomb;
 
+import com.hbm.entity.missile.*;
 import org.apache.logging.log4j.Level;
 
 import com.hbm.blocks.ModBlocks;
 import com.hbm.config.GeneralConfig;
-import com.hbm.entity.missile.EntityCarrier;
-import com.hbm.entity.missile.EntityMissileAntiBallistic;
-import com.hbm.entity.missile.EntityMissileBHole;
-import com.hbm.entity.missile.EntityMissileBunkerBuster;
-import com.hbm.entity.missile.EntityMissileBurst;
-import com.hbm.entity.missile.EntityMissileBusterStrong;
-import com.hbm.entity.missile.EntityMissileCluster;
-import com.hbm.entity.missile.EntityMissileClusterStrong;
-import com.hbm.entity.missile.EntityMissileDoomsday;
-import com.hbm.entity.missile.EntityMissileDrill;
-import com.hbm.entity.missile.EntityMissileEMP;
-import com.hbm.entity.missile.EntityMissileEMPStrong;
-import com.hbm.entity.missile.EntityMissileEndo;
-import com.hbm.entity.missile.EntityMissileExo;
-import com.hbm.entity.missile.EntityMissileGeneric;
-import com.hbm.entity.missile.EntityMissileIncendiary;
-import com.hbm.entity.missile.EntityMissileIncendiaryStrong;
-import com.hbm.entity.missile.EntityMissileInferno;
-import com.hbm.entity.missile.EntityMissileMicro;
-import com.hbm.entity.missile.EntityMissileMirv;
-import com.hbm.entity.missile.EntityMissileNuclear;
-import com.hbm.entity.missile.EntityMissileN2;
-import com.hbm.entity.missile.EntityMissileRain;
-import com.hbm.entity.missile.EntityMissileSchrabidium;
-import com.hbm.entity.missile.EntityMissileStrong;
-import com.hbm.entity.missile.EntityMissileTaint;
-import com.hbm.entity.missile.EntityMissileVolcano;
 import com.hbm.interfaces.IBomb;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
@@ -148,6 +122,17 @@ public class LaunchPad extends BlockContainer implements IBomb {
 				if (GeneralConfig.enableExtendedLogging)
 					MainRegistry.logger.log(Level.INFO, "[MISSILE] Tried to launch missile at " + x + " / " + y + " / " + z + " to " + xCoord + " / " + zCoord + "!");
 
+				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_dummy && entity.power >= 75000) {
+					EntityMissileDummy missile = new EntityMissileDummy(world, x + 0.5F, y + 1.5F, z + 0.5F, xCoord, zCoord);
+					missile.setAcceleration(1.5D);
+					if (!world.isRemote)
+						world.spawnEntity(missile);
+					entity.power -= 75000;
+
+					entity.inventory.setStackInSlot(0, ItemStack.EMPTY);
+					world.playSound(null, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, HBMSoundHandler.missileTakeoff, SoundCategory.BLOCKS, 2.0F, 1.0F);
+					entity.clearingTimer = TileEntityLaunchPad.clearingDuraction;
+				}
 				if (entity.inventory.getStackInSlot(0).getItem() == ModItems.missile_generic && entity.power >= 75000) {
 					// EntityMissileGeneric missile = new
 					// EntityMissileGeneric(world, xCoord, zCoord, x + 0.5F, y +
