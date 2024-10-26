@@ -81,9 +81,6 @@ public class CraneUnboxer extends BlockCraneBase implements IEnterableBlock {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         TileEntity tileentity = world.getTileEntity(pos);
 
-        if(tileentity instanceof TileEntityCraneUnboxer) {
-            InventoryHelper.dropInventoryItems(world, pos, (TileEntityCraneUnboxer) tileentity);
-        }
         super.breakBlock(world, pos, state);
     }
 }

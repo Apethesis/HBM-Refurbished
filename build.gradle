@@ -1,7 +1,7 @@
 buildscript {
     repositories {
-        maven { url = "https://maven.minecraftforge.net/" }
-        maven { url = "https://files.minecraftforge.net/maven" }
+        maven { url = "https://maven.neoforged.net/" }
+        maven { url = "https://files.neoforged.net/maven" }
         mavenCentral()
         maven {
     // location of the maven that hosts JEI files
@@ -24,9 +24,9 @@ apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'eclipse'
 apply plugin: 'maven-publish'
 
-version = '2.0.2'
+version = "2.0.6"
 group = 'com.hbm' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
-archivesBaseName = 'NTM-Extended-1.12.2'
+archivesBaseName = 'HBM-Refurbished'
 
 compileJava.options.encoding = 'UTF-8'
 tasks.withType(JavaCompile) {
@@ -71,34 +71,7 @@ minecraft {
     }
 }
 
-repositories {
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "https://dvs1.progwml6.com/files/maven/"
-    }
-    maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "https://modmaven.k-4u.nl"
-    }
-    maven { // CraftTweaker
-        name = "jared maven"
-        url = "http://maven.blamejared.com/"
-    }
-    maven { //GC
-        name = "galacticraft"
-        url = "https://maven.galacticraft.net/repository/legacy/"
-    }
-    maven { //  baubles
-        name = "mcmoddev"
-        url = "https://maven.mcmoddev.com"
-    }
-    maven {
-        name = 'CoFH Maven'
-        url = 'https://maven.covers1624.net'
-    }
-}
+repositories {  }
 
 dependencies {
     // Specify the version of Minecraft to use, If this is any group other then 'net.minecraft' it is assumed
@@ -114,7 +87,7 @@ dependencies {
     // compile 'com.mod-buildcraft:buildcraft:6.0.8:dev'  // adds buildcraft to the dev env
     // compile 'com.googlecode.efficient-java-matrix-library:ejml:0.24' // adds ejml to the dev env
 
-    compile "li.cil.oc:OpenComputers:MC1.12.2-1.7.+:api" 
+    compile files("libs/OpenComputers-MC${version_mc}-${version_oc}-api.jar")
 
     // The 'provided' configuration is for optional dependencies that exist at compile-time but might not at runtime.
     // provided 'com.mod-buildcraft:buildcraft:6.0.8:dev'
@@ -123,20 +96,20 @@ dependencies {
     // deobf 'com.mod-buildcraft:buildcraft:6.0.8:dev'
 
     // compile against the JEI API but do not include it at runtime
-    compileOnly fg.deobf("mezz.jei:jei_1.12.2:${version_jei}:api")
+    compileOnly files("libs/jei_${version_mc}-${version_jei}.jar")
     // at runtime, use the full JEI jar
-    runtimeOnly fg.deobf("mezz.jei:jei_1.12.2:${version_jei}")
+    runtimeOnly files("libs/jei_${version_mc}-${version_jei}.jar")
 
     //compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api")
     //runtimeOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}")
 
-    compileOnly "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-${version_crafttweaker}"
+    compileOnly files("libs/CraftTweaker2-1.12-${version_crafttweaker}.jar")
 
-    compileOnly fg.deobf("dev.galacticraft:galacticraft-legacy:${version_gc}")
+    compileOnly files("libs/Galacticraft-${version_mc}-${version_gc}.jar")
 
-    compileOnly fg.deobf("com.azanor:Baubles:${version_baubles}")
+    compileOnly files("libs/Baubles-${version_baubles}.jar")
 
-    compileOnly fg.deobf("cofh:RedstoneFlux:1.12-${version_redstoneflux}:universal")
+    compileOnly files("libs/RedstoneFlux-1.12-${version_redstoneflux}-universal.jar")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..

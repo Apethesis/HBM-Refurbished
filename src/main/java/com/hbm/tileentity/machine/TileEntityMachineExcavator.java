@@ -68,7 +68,7 @@ import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class TileEntityMachineExcavator extends TileEntityMachineBase implements IEnergyUser, IFluidHandler, ITickable, ITankPacketAcceptor, IControlReceiver, IGUIProvider, IMiningDrill {
 
-	public static final long maxPower = 10_000_000;
+	public static final long maxPower = 100_000_000;
 	public long power;
 	public boolean operational = false;
 	
@@ -92,7 +92,7 @@ public class TileEntityMachineExcavator extends TileEntityMachineBase implements
 	public int chuteTimer = 0;
 	
 	public double speed = 1.0D;
-	public final long baseConsumption = 10_000L;
+	public final long baseConsumption = 1000L;
 	public long consumption = baseConsumption;
 	protected int drillRating = 0;
 	

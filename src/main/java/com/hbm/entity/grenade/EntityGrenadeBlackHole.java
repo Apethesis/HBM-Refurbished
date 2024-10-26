@@ -34,7 +34,7 @@ public class EntityGrenadeBlackHole extends EntityGrenadeBouncyBase
             this.setDead();
             this.world.createExplosion(this, this.posX, this.posY, this.posZ, 1.5F, true);
 
-        	EntityBlackHole bl = new EntityBlackHole(this.world, 1.5F);
+        	EntityBlackHole bl = new EntityBlackHole(this.world, 1.5F,true);
         	bl.posX = this.posX;
         	bl.posY = this.posY;
         	bl.posZ = this.posZ;

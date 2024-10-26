@@ -32,6 +32,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class EntityBlackHole extends Entity implements IConstantRenderer {
 
+	public boolean destroyBlocks = false;
+
 	public static final DataParameter<Float> SIZE = EntityDataManager.createKey(EntityBlackHole.class, DataSerializers.FLOAT);
 	
 	public EntityBlackHole(World worldIn) {
@@ -39,9 +41,16 @@ public class EntityBlackHole extends Entity implements IConstantRenderer {
 		this.ignoreFrustumCheck = true;
 		this.isImmuneToFire = true;
 	}
-	
+
 	public EntityBlackHole(World w, float size){
 		this(w);
+		this.destroyBlocks = true;
+		this.getDataManager().set(SIZE, size);
+	}
+	
+	public EntityBlackHole(World w, float size, boolean destroy){
+		this(w);
+		this.destroyBlocks = destroy;
 		this.getDataManager().set(SIZE, size);
 	}
 
@@ -81,7 +90,7 @@ public class EntityBlackHole extends Entity implements IConstantRenderer {
 						world.setBlockState(des, Blocks.AIR.getDefaultState());
 					}
 					
-					if(world.getBlockState(des).getBlock() != Blocks.AIR) {
+					if(world.getBlockState(des).getBlock() != Blocks.AIR && destroyBlocks) {
 						EntityRubble rubble = new EntityRubble(world);
 						rubble.posX = x0 + 0.5F;
 						rubble.posY = y0;
@@ -105,7 +114,7 @@ public class EntityBlackHole extends Entity implements IConstantRenderer {
 		
 		for(Entity e : entities) {
 			
-			if(e instanceof EntityPlayer && ((EntityPlayer)e).capabilities.isCreativeMode)
+			if((e instanceof EntityPlayer && ((EntityPlayer)e).capabilities.isCreativeMode) || (e instanceof EntityPlayer && !destroyBlocks))
 				continue;
 			
 			if(e instanceof EntityFallingBlock && !world.isRemote && e.ticksExisted > 1) {

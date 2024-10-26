@@ -8,15 +8,19 @@ import com.hbm.entity.logic.EntityNukeExplosionMK5;
 import com.hbm.items.ModItems;
 import com.hbm.lib.HBMSoundHandler;
 import com.hbm.lib.ModDamageSource;
+import com.hbm.util.ContaminationUtil;
+import com.hbm.util.I18nUtil;
 
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.SoundCategory;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -25,13 +29,15 @@ public class ItemUnstable extends Item {
 
 	int radius;
 	int timer;
+	int digamma;
 
-	public ItemUnstable(int radius, int timer, String s) {
+	public ItemUnstable(int radius, int timer, String s, int diagamma) {
 		this.setUnlocalizedName(s);
 		this.setRegistryName(s);
 		this.radius = radius;
 		this.timer = timer;
 		this.setHasSubtypes(true);
+		this.digamma = diagamma;
 
 		ModItems.ALL_ITEMS.add(this);
 	}
@@ -41,6 +47,11 @@ public class ItemUnstable extends Item {
 		if(stack.getItemDamage() != 0)
     		return;
 		this.setTimer(stack, this.getTimer(stack) + 1);
+
+		if(entity instanceof EntityPlayer) {
+			EntityPlayer player = (EntityPlayer) entity;
+			ContaminationUtil.applyDigammaData(player, 1F / ((float) digamma));
+		}
 
 		if(this.getTimer(stack) == timer && !world.isRemote) {
 			world.spawnEntity(EntityNukeExplosionMK5.statFac(world, radius, entity.posX, entity.posY, entity.posZ));
@@ -113,6 +124,16 @@ public class ItemUnstable extends Item {
 	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
 		if(stack.getItemDamage() != 0)
     		return;
+		tooltip.add(TextFormatting.GOLD + I18nUtil.resolveKey("trait.hlParticle", "1.67*10³⁴ a"));
+		tooltip.add(TextFormatting.RED + I18nUtil.resolveKey("trait.hlPlayer", (digamma / 20F) + "s"));
+		
+		tooltip.add("");
+
+		float d = ((int) ((1000F / digamma) * 200F)) / 10F;
+
+		tooltip.add(TextFormatting.RED + "[" + I18nUtil.resolveKey("trait.digamma") + "]");
+		tooltip.add(TextFormatting.DARK_RED + "" + d + "mDRX/s");
+
     	tooltip.add("§4[Unstable]§r");
 		tooltip.add("§cDecay Time: " + (int)timer/20 + "s - Explosion Radius: "+ radius+"m§r");
 		tooltip.add("§cDecay: " + (getTimer(stack) * 100 / timer) + "%§r");

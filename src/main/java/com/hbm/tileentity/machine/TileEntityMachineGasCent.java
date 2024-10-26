@@ -129,25 +129,15 @@ public class TileEntityMachineGasCent extends TileEntityMachineBase implements I
 		List<GasCentOutput> out = MachineRecipes.getGasCentOutput(tank.getFluid() == null ? null : tank.getFluid().getFluid());
 		this.progress = 0;
 		tank.drain(MachineRecipes.getFluidConsumedGasCent(tank.getFluid() == null ? null : tank.getFluid().getFluid()), true);
-		
-		List<GasCentOutput> random = new ArrayList<GasCentOutput>();
-		
+		GasCentOutput result;
 		for(int i = 0; i < out.size(); i++) {
-			for(int j = 0; j < out.get(i).weight; j++) {
-				random.add(out.get(i));
+			result = out.get(i);
+			int slot = result.slot + 4;
+			if(inventory.getStackInSlot(slot).isEmpty()) {
+				inventory.setStackInSlot(slot, result.output.copy());
+			} else {
+				inventory.getStackInSlot(slot).grow(result.output.getCount());
 			}
-		}
-		
-		Collections.shuffle(random);
-		
-		GasCentOutput result = random.get(world.rand.nextInt(random.size()));
-		
-		int slot = result.slot + 4;
-		
-		if(inventory.getStackInSlot(slot).isEmpty()) {
-			inventory.setStackInSlot(slot, result.output.copy());
-		} else {
-			inventory.getStackInSlot(slot).grow(result.output.getCount());
 		}
 	}
 	

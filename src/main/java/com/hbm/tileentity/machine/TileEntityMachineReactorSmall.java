@@ -410,13 +410,6 @@ public class TileEntityMachineReactorSmall extends TileEntity implements ITickab
 		} else if(b == ModBlocks.block_lead) {
 			decayMod += 1;
 
-		} else if(b == Blocks.WATER || b == Blocks.FLOWING_WATER) {
-			tanks[0].fill(new FluidStack(tankTypes[0], 25), true);
-		} else if(b == ModBlocks.block_niter || b == ModBlocks.block_niter_reinforced) {
-			if(tanks[0].getFluidAmount() >= 50 && tanks[1].getFluidAmount() + 5 <= tanks[1].getCapacity()) {
-				tanks[0].drain(50, true);
-				tanks[1].fill(new FluidStack(tankTypes[1], 5), true);
-			}
 		} else if(b == ModBlocks.machine_reactor) {
 
 			int[] pos1 = ((MachineReactor) ModBlocks.machine_reactor).findCore(world, pos.getX(), pos.getY(), pos.getZ());
