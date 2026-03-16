@@ -1,7 +1,6 @@
 buildscript {
     repositories {
-        maven { url = "https://maven.neoforged.net/" }
-        maven { url = "https://files.neoforged.net/maven" }
+        maven { url = "https://maven.neoforged.net/releases" }
         mavenCentral()
         maven {
     // location of the maven that hosts JEI files
