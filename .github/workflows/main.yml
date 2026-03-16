@@ -1,4 +1,6 @@
 on:
+  workflow_dispatch:
+    
   push:
     branches:
     - Custom-1.12.2
